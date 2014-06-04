@@ -318,7 +318,7 @@ public class PlayPingPong implements Runnable
         mPlatformStrategy.begin();
 
         /** Let the user know we're starting. */
-        mPlatformStrategy.print("Ready...Set...Go!");
+        mPlatformStrategy.print("Ready...Set...Go! " + mSyncMechanism);
 
         /** Create the ping and pong threads. */
         PingPongThread pingPongThreads[] = new PingPongThread[2];
