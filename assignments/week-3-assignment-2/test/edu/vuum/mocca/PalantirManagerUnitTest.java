@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -238,7 +239,7 @@ public class PalantirManagerUnitTest {
                                                           Throwable e) {
                             System.out.println(t 
                                                + " throws exception: " 
-                                               + e);
+                                               + e + Arrays.toString(e.getStackTrace()));
                             mFailed = true;
                         }
                     });
