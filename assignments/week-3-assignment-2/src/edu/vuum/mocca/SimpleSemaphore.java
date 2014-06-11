@@ -48,7 +48,7 @@ public class SimpleSemaphore {
      */
     public void acquire() throws InterruptedException {
         // TODO - you fill in here.
-    	lock.lock();
+    	lock.lockInterruptibly();
     	try{
     		while(permits <= 0)
     			notFull.await();
@@ -66,9 +66,8 @@ public class SimpleSemaphore {
         // TODO - you fill in here.
     	lock.lock();
     	try{
-    		while(permits <= 0){
+    		while(permits <= 0)
     			notFull.awaitUninterruptibly();
-    		}
     		permits--;
     	}finally{
     		lock.unlock();
