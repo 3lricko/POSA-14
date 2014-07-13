@@ -41,7 +41,7 @@ public class DownloadActivity extends Activity {
      * Default URL.
      */
     private String mDefaultUrl = 
-        "http://www.dre.vanderbilt.edu/~schmidt/ka.png";
+        "http://www.queness.com/resources/images/png/apple_ex.png";
 
     /**
      * Display progress of download
@@ -81,7 +81,7 @@ public class DownloadActivity extends Activity {
     void showErrorToast(String errorString) {
         Toast.makeText(this,
                        errorString,
-                       Toast.LENGTH_LONG).show();
+                       Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -98,9 +98,10 @@ public class DownloadActivity extends Activity {
                            + " please contact the Developer.");
         else if (image != null)
             mImageView.setImageBitmap(image);
-        else
+        else{
             showErrorToast("image is corrupted,"
                            + " please check the requested URL.");
+         }
     }
 
     /**
@@ -205,7 +206,7 @@ public class DownloadActivity extends Activity {
             ProgressDialog.show(this,
                                 "Download",
                                 message,
-                                true);
+                                true,true);
     }
     
     /**
