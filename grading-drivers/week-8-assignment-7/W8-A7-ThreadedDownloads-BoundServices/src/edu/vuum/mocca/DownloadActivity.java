@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * This is the main Activity that the program uses to start the
@@ -76,7 +77,7 @@ public class DownloadActivity extends DownloadBase {
                 // service parameter into an interface that can be
                 // used to make RPC calls to the Service.
 
-                mDownloadCall = null;
+                mDownloadCall = DownloadCall.Stub.asInterface(service);
             }
 
             /**
@@ -109,7 +110,7 @@ public class DownloadActivity extends DownloadBase {
                 // service parameter into an interface that can be
                 // used to make RPC calls to the Service.
 
-                mDownloadRequest = null;
+                mDownloadRequest = DownloadRequest.Stub.asInterface(service);
             }
 
             /**
@@ -145,7 +146,13 @@ public class DownloadActivity extends DownloadBase {
                 // sendPath().  Please use displayBitmap() defined in
                 // DownloadBase.
 
-                Runnable displayRunnable = null;
+                Runnable displayRunnable = new Runnable() {
+					@Override
+					public void run() {
+						displayBitmap(imagePathname);
+					}
+				};
+				runOnUiThread(displayRunnable);
             }
         };
      
@@ -162,12 +169,25 @@ public class DownloadActivity extends DownloadBase {
         case R.id.bound_sync_button:
             // TODO - You fill in here to use mDownloadCall to
             // download the image & then display it.
+        	try {
+				String downloadFilePath = mDownloadCall.downloadImage(uri);
+				displayBitmap(downloadFilePath);
+			} catch (RemoteException e) {
+				Log.e(TAG, e.getMessage());
+				Toast.makeText(this, "Download sync failed!", Toast.LENGTH_LONG).show();
+			}
             break;
 
         case R.id.bound_async_button:
             // TODO - You fill in here to call downloadImage() on
             // mDownloadRequest, passing in the appropriate Uri and
             // callback.
+        	try {
+				mDownloadRequest.downloadImage(uri, mDownloadCallback);
+			} catch (RemoteException e) {
+				Log.e(TAG, e.getMessage());
+				Toast.makeText(this, "Download async failed!", Toast.LENGTH_LONG).show();
+			}
             break;
         }
     }
